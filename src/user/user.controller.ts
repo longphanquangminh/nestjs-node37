@@ -18,6 +18,7 @@ import { users } from '@prisma/client';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as fs from 'fs';
+import { ApiTags } from '@nestjs/swagger';
 
 // type UserType = {
 //   user_id: number;
@@ -30,6 +31,7 @@ import * as fs from 'fs';
 //   refresh_token: string;
 // };
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(
