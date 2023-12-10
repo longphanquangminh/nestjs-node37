@@ -12,6 +12,8 @@ import { ConfigModule } from '@nestjs/config';
 })
 export class AppModule {}
 
+// nestjs framework tùy ý dùng TS và JS
+
 // protected: ko thể truy cập từ bên ngoài, chỉ những lớp kế thừa mới truy cập được
 
 // đối tượng:
@@ -35,3 +37,10 @@ export class AppModule {}
 // nest g resource [tên module] --no-spec
 
 // Auth
+
+// prisma
+// B1: yarn add prisma @prisma/client
+// B2: yarn prisma init
+// B3: vào .env sửa lại chuỗi kết nối CSDL, và file schema.prisma
+// B4: yarn prisma db pull
+// B5: yarn prisma generate
