@@ -6,12 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ConfigService } from '@nestjs/config';
 import { users } from '@prisma/client';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as fs from 'fs';
 
 // type UserType = {
 //   user_id: number;
@@ -31,8 +37,17 @@ export class UserController {
     private configService: ConfigService,
   ) {}
 
+  @UseInterceptors(
+    FilesInterceptor('avatar', 10, {
+      storage: diskStorage({
+        destination: process.cwd() + '/public/img',
+        filename: (req, file, callback) =>
+          callback(null, new Date().getTime() + '_' + file.originalname),
+      }),
+    }),
+  )
   @Post('/upload')
-  upload(file) {
+  upload(@UploadedFiles() file: Express.Multer.File[]) {
     return file;
   }
   @Get()
