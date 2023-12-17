@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
+  constructor(private jwtService: JwtService) {}
   login() {
-    return 'token';
+    let token = this.jwtService.signAsync(
+      {
+        data: {
+          userId: 1,
+        },
+      },
+      { expiresIn: '10m', secret: 'BI_MAT' },
+    );
+    return token;
   }
 
   signup() {

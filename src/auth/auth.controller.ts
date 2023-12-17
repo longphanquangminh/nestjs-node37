@@ -19,7 +19,7 @@ export class AuthController {
       // sai mật khẩu hoặc email
       // throw new HttpException('Sai email', 400);
       // throw new HttpException('Sai email', HttpStatus.BAD_REQUEST);
-      throw new BadRequestException('Sai email');
+      // throw new BadRequestException('Sai email');
 
       return this.authService.login();
     } catch (exception) {
