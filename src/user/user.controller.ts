@@ -34,6 +34,7 @@ import { AuthGuard } from '@nestjs/passport';
 //   refresh_token: string;
 // };
 
+// @UseGuards(AuthGuard('jwt'))
 @ApiTags('user')
 @Controller('user')
 export class UserController {
