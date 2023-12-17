@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFile,
   UploadedFiles,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -20,6 +21,7 @@ import { diskStorage } from 'multer';
 import * as fs from 'fs';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UploadDto } from './dto/uploadDto';
+import { AuthGuard } from '@nestjs/passport';
 
 // type UserType = {
 //   user_id: number;
@@ -56,6 +58,8 @@ export class UserController {
   upload(@UploadedFiles() file: Express.Multer.File[]) {
     return file;
   }
+
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll(): Promise<users[]> {
     // return this.configService.get('TITLE');
