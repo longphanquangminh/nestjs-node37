@@ -18,7 +18,8 @@ import { users } from '@prisma/client';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as fs from 'fs';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { UploadDto } from './dto/uploadDto';
 
 // type UserType = {
 //   user_id: number;
@@ -38,7 +39,10 @@ export class UserController {
     private readonly userService: UserService,
     private configService: ConfigService,
   ) {}
-
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    type: UploadDto,
+  })
   @UseInterceptors(
     FilesInterceptor('avatar', 10, {
       storage: diskStorage({
