@@ -1,13 +1,21 @@
 // import { Body, Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { Body, Controller, Get, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 // import { Request } from 'express';
 
 type DemoBody = {
   ma2: string;
   hoTen2: string;
 };
+
+// khi dùng @Req, cho swagger nó hiểu?
+// class DemoBody {
+//   @ApiProperty({ name: 'maNV' })
+//   ma2: string;
+//   @ApiProperty()
+//   hoTen2: string;
+// }
 
 @ApiTags('app')
 @Controller('/app') // endpoint cho cấp đối tượng?
@@ -24,6 +32,10 @@ export class AppController {
   //   return 'demo node37';
   // }
 
+  // @ApiBody({ type: DemoBody }) // khi dùng @Req, cho swagger nó hiểu, DemoBody là 1 class (như trên)
+  // @ApiQuery({ name: 'id' }) // khi dùng @Req, cho swagger nó hiểu
+  // @ApiParam({ name: 'email' }) // khi dùng @Req, cho swagger nó hiểu
+  // @ApiParam({ name: 'phone' }) // khi dùng @Req, cho swagger nó hiểu // 2 param thì lại thêm 1 cái decorator @ApiParam
   @Get('/demo/:email/:phone')
   getDemo(
     // @Req() req: Request,
