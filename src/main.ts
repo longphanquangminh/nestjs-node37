@@ -9,7 +9,10 @@ async function bootstrap() {
   // định vị đường dẫn load tài nguyên
   app.use(express.static('.'));
 
-  const config = new DocumentBuilder().setTitle('Node 37').build();
+  const config = new DocumentBuilder()
+    .setTitle('Node 37')
+    .addBearerAuth()
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/swagger', app, document);
 

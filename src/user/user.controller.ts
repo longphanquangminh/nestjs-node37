@@ -10,6 +10,7 @@ import {
   UploadedFile,
   UploadedFiles,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,9 +20,10 @@ import { users } from '@prisma/client';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as fs from 'fs';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UploadDto } from './dto/uploadDto';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 // type UserType = {
 //   user_id: number;
@@ -34,6 +36,7 @@ import { AuthGuard } from '@nestjs/passport';
 //   refresh_token: string;
 // };
 
+// @ApiBearerAuth()
 // @UseGuards(AuthGuard('jwt'))
 @ApiTags('user')
 @Controller('user')
@@ -60,9 +63,11 @@ export class UserController {
     return file;
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  findAll(): Promise<users[]> {
+  findAll(@Req() req: Request): Promise<users[]> {
+    // const data = req.user; // lấy từ async validate
     // return this.configService.get('TITLE');
     return this.userService.findAll();
   }
